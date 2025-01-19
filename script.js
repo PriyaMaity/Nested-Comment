@@ -1,6 +1,7 @@
 const commentsContainer = document.getElementById('comments-container');
 const newCommentInput = document.getElementById('new-comment-input');
 const usernameInput = document.getElementById('username-input');
+const commentCharCounter = document.getElementById('comment-char-counter');
 const addCommentBtn = document.getElementById('add-comment-btn');
 const resetBtn = document.getElementById('reset-btn');
 
@@ -18,10 +19,25 @@ const defaultComments = [
   { text: 'This is a great post! 😊', id: 'default-comment-1', user: { name: 'Alice', avatar: randomAvatars[0] } },
   { text: 'I completely agree with you! 👍', id: 'default-comment-2', user: { name: 'Bob', avatar: randomAvatars[1] } }
 ];
-
+const maxLength = 250;
 newCommentInput.addEventListener('input', () => {
-  const remaining = 250 - newCommentInput.value.length;
+  const currentLength = newCommentInput.value.length;
+  const remaining = maxLength - currentLength;
   commentCharCounter.textContent = `${remaining} characters left`;
+
+  if (currentLength >= maxLength) {
+    newCommentInput.value = newCommentInput.value.substring(0, maxLength);  
+  }
+
+  if (remaining <= 50) {
+    commentCharCounter.classList.add('warning');
+    commentCharCounter.classList.remove('danger');
+  } else if (remaining <= 20) {
+    commentCharCounter.classList.add('danger');
+    commentCharCounter.classList.remove('warning');
+  } else {
+    commentCharCounter.classList.remove('warning', 'danger');
+  }
 });
 
 addCommentBtn.addEventListener('click', () => {
