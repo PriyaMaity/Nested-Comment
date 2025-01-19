@@ -19,6 +19,11 @@ const defaultComments = [
   { text: 'I completely agree with you! 👍', id: 'default-comment-2', user: { name: 'Bob', avatar: randomAvatars[1] } }
 ];
 
+newCommentInput.addEventListener('input', () => {
+  const remaining = 250 - newCommentInput.value.length;
+  commentCharCounter.textContent = `${remaining} characters left`;
+});
+
 addCommentBtn.addEventListener('click', () => {
   const commentText = newCommentInput.value.trim();
   const username = usernameInput.value.trim();
